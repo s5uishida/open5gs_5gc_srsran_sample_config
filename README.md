@@ -519,10 +519,13 @@ The Open5GS U-Plane log when executed is as follows.
 ```
 The result of `ip addr show` on VM4 (UE) is as follows.
 ```
+# ip addr show
+...
 5: tun_srsue: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UNKNOWN group default qlen 500
     link/none 
     inet 10.45.0.2/24 scope global tun_srsue
        valid_lft forever preferred_lft forever
+...
 ```
 
 <h2 id="ping">Ping google.com</h2>
