@@ -405,7 +405,7 @@ Next, run Open5GS 5GC U-Plane.
 Run srsRAN 5G ZMQ RAN and connect to Open5GS 5GC.
 ```
 # cd srsRAN_Project/build/apps/gnb
-#  ./gnb -c gnb_zmq.yaml
+# ./gnb -c gnb_zmq.yaml
 Lower PHY in executor blocking mode.
 
 --== srsRAN gNB (commit 1afd7240f) ==--
