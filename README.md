@@ -588,6 +588,7 @@ In investigating 5G SA, I have built a simulation environment and can now use a 
 <h2 id="issues">Issues</h2>
 
 As of 2023.08.26, according to [here](https://github.com/srsran/srsRAN_4G/issues/1213), there is an issue where downlink packets stop flowing between srsue and srsgnb via ZeroMQ.
+The hotfix is [here](https://github.com/srsran/srsRAN_4G/issues/1213#issuecomment-1703512937).
 
 <h2 id="changelog">Changelog (summary)</h2>
 
