@@ -51,7 +51,6 @@ This briefly describes the overall and configuration files in the Virtualbox VM 
   - [Run srsRAN 5G ZMQ UE](#run_ue)
 - [Ping google.com](#ping)
   - [Case for going through DN 10.45.0.0/16](#ping_1)
-- [Issues](#issues)
 - [Changelog (summary)](#changelog)
 ---
 
@@ -584,11 +583,6 @@ You could now create the end-to-end TUN interface on the DN and send any packets
 
 ---
 In investigating 5G SA, I have built a simulation environment and can now use a very useful system for investigating 5GC and MEC of 5G SA mobile network. I would like to thank the excellent developers and all the contributors of Open5GS, srsRAN Project and srsRAN 4G.
-
-<h2 id="issues">Issues</h2>
-
-As of 2023.08.26, according to [here](https://github.com/srsran/srsRAN_4G/issues/1213), there is an issue where downlink packets stop flowing between srsue and srsgnb via ZeroMQ.
-The hotfix is [here](https://github.com/srsran/srsRAN_4G/issues/1213#issuecomment-1703512937).
 
 <h2 id="changelog">Changelog (summary)</h2>
 
