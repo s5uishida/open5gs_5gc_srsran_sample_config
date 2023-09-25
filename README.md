@@ -5,7 +5,9 @@ This briefly describes the overall and configuration files in the Virtualbox VM 
 
 ---
 
-<h2 id="conf_list">List of Sample Configurations</h2>
+<a id="conf_list"></a>
+
+## List of Sample Configurations
 
 1. [One SGW-C/PGW-C, one SGW-U/PGW-U and one APN](https://github.com/s5uishida/open5gs_epc_srsran_sample_config)
 2. [One SGW-C/PGW-C, Multiple SGW-Us/PGW-Us and APNs](https://github.com/s5uishida/open5gs_epc_oai_sample_config)
@@ -22,7 +24,9 @@ This briefly describes the overall and configuration files in the Virtualbox VM 
 13. [VPP-UPF with DPDK](https://github.com/s5uishida/open5gs_5gc_ueransim_vpp_upf_dpdk_sample_config)
 ---
 
-<h2 id="misc">Miscellaneous Notes</h2>
+<a id="misc"></a>
+
+## Miscellaneous Notes
 
 - [Install MongoDB 6.0 and Open5GS WebUI](https://github.com/s5uishida/open5gs_install_mongodb6_webui)
 - [Install MongoDB 4.4.18 on Ubuntu 20.04 for Raspberry Pi 4B](https://github.com/s5uishida/install_mongodb_on_ubuntu_for_rp4b)
@@ -32,7 +36,9 @@ This briefly describes the overall and configuration files in the Virtualbox VM 
 - [A Note for Changing Network Interface of UPF from TUN to TAP in Open5GS](https://github.com/s5uishida/change_from_tun_to_tap_in_open5gs)
 ---
 
-<h2 id="toc">Table of Contents</h2>
+<a id="toc"></a>
+
+## Table of Contents
 
 - [Overview of Open5GS 5GC Simulation Mobile Network](#overview)
 - [Changes in configuration files of Open5GS 5GC and srsRAN 5G ZMQ UE / RAN](#changes)
@@ -54,7 +60,9 @@ This briefly describes the overall and configuration files in the Virtualbox VM 
 - [Changelog (summary)](#changelog)
 ---
 
-<h2 id="overview">Overview of Open5GS 5GC Simulation Mobile Network</h2>
+<a id="overview"></a>
+
+## Overview of Open5GS 5GC Simulation Mobile Network
 
 I created a 5GC mobile network (Internet reachable) for simulation with the aim of creating an environment in which packets can be sent end-to-end with one DN for one DNN.
 
@@ -108,14 +116,18 @@ Open5GS 5GC U-Plane worked fine on Raspberry Pi 4 Model B. I used [Ubuntu 20.04 
 
 In addition, I have not confirmed the communication performance.
 
-<h2 id="changes">Changes in configuration files of Open5GS 5GC and srsRAN 5G ZMQ UE / RAN</h2>
+<a id="changes"></a>
+
+## Changes in configuration files of Open5GS 5GC and srsRAN 5G ZMQ UE / RAN
 
 Please refer to the following for building Open5GS and srsRAN 5G ZMQ UE / RAN respectively.
 - Open5GS v2.6.4 (2023.08.26) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
 - srsRAN Project (RAN) (2023.08.26) - https://github.com/s5uishida/build_srsran_5g_zmq
 - srsRAN 4G (UE) (2023.08.26) - https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins
 
-<h3 id="changes_cp">Changes in configuration files of Open5GS 5GC C-Plane</h3>
+<a id="changes_cp"></a>
+
+### Changes in configuration files of Open5GS 5GC C-Plane
 
 The following parameters including DNN can be used in the logic that selects UPF as the connection destination by PFCP.
 
@@ -125,7 +137,9 @@ The following parameters including DNN can be used in the logic that selects UPF
 
 For the sake of simplicity, I used only DNN this time. Please refer to [here](https://github.com/open5gs/open5gs/pull/560#issue-483001043) for the logic to select UPF.
 
-<h3 id="changes_cp">Changes in configuration files of Open5GS 5GC C-Plane</h3>
+<a id="changes_cp"></a>
+
+### Changes in configuration files of Open5GS 5GC C-Plane
 
 - `open5gs/install/etc/open5gs/amf.yaml`
 ```diff
@@ -214,7 +228,9 @@ For the sake of simplicity, I used only DNN this time. Please refer to [here](ht
  #  o Disable use of IPv4 addresses (only IPv6)
 ```
 
-<h3 id="changes_up">Changes in configuration files of Open5GS 5GC U-Plane</h3>
+<a id="changes_up"></a>
+
+### Changes in configuration files of Open5GS 5GC U-Plane
 
 - `open5gs/install/etc/open5gs/upf.yaml`
 ```diff
@@ -239,9 +255,13 @@ For the sake of simplicity, I used only DNN this time. Please refer to [here](ht
          port: 9090
 ```
 
-<h3 id="changes_srs">Changes in configuration files of srsRAN 5G ZMQ UE / RAN</h3>
+<a id="changes_srs"></a>
 
-<h4 id="changes_ran">Changes in configuration files of RAN</h4>
+### Changes in configuration files of srsRAN 5G ZMQ UE / RAN
+
+<a id="changes_ran"></a>
+
+#### Changes in configuration files of RAN
 
 See [here](https://github.com/s5uishida/build_srsran_5g_zmq#create-the-configuration-file-of-gnodeb) for the original files.
 
@@ -283,7 +303,9 @@ See [here](https://github.com/s5uishida/build_srsran_5g_zmq#create-the-configura
        ss2_type: common              # Search Space type, has to be set to common
 ```
 
-<h4 id="changes_ue">Changes in configuration files of UE</h4>
+<a id="changes_ue"></a>
+
+#### Changes in configuration files of UE
 
 See [here](https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins#create-the-configuration-file-of-nr-ue) for the original files.
 
@@ -334,9 +356,13 @@ See [here](https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins#c
  
 ```
 
-<h2 id="network_settings">Network settings of Open5GS 5GC</h2>
+<a id="network_settings"></a>
 
-<h3 id="network_settings_up">Network settings of Open5GS 5GC U-Plane</h3>
+## Network settings of Open5GS 5GC
+
+<a id="network_settings_up"></a>
+
+### Network settings of Open5GS 5GC U-Plane
 
 First, uncomment the next line in the `/etc/sysctl.conf` file and reflect it in the OS.
 ```
@@ -354,7 +380,9 @@ ip link set ogstun up
 iptables -t nat -A POSTROUTING -s 10.45.0.0/16 ! -o ogstun -j MASQUERADE
 ```
 
-<h2 id="build">Build Open5GS and srsRAN 5G ZMQ UE / RAN</h2>
+<a id="build"></a>
+
+## Build Open5GS and srsRAN 5G ZMQ UE / RAN
 
 Please refer to the following for building Open5GS and srsRAN 5G ZMQ UE / RAN respectively.
 - Open5GS v2.6.4 (2023.08.26) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
@@ -365,11 +393,15 @@ Install MongoDB on Open5GS 5GC C-Plane machine.
 It is not necessary to install MongoDB on Open5GS 5GC U-Plane machines.
 [MongoDB Compass](https://www.mongodb.com/products/compass) is a convenient tool to look at the MongoDB database.
 
-<h2 id="run">Run Open5GS 5GC and srsRAN 5G ZMQ UE / RAN</h2>
+<a id="run"></a>
+
+## Run Open5GS 5GC and srsRAN 5G ZMQ UE / RAN
 
 First run the 5GC, then the RAN, and the UE.
 
-<h3 id="run_cp">Run Open5GS 5GC C-Plane</h3>
+<a id="run_cp"></a>
+
+### Run Open5GS 5GC C-Plane
 
 First, run Open5GS 5GC C-Plane.
 
@@ -390,7 +422,9 @@ sleep 2
 ./install/bin/open5gs-bsfd &
 ```
 
-<h3 id="run_up">Run Open5GS 5GC U-Plane</h3>
+<a id="run_up"></a>
+
+### Run Open5GS 5GC U-Plane
 
 Next, run Open5GS 5GC U-Plane.
 
@@ -399,7 +433,9 @@ Next, run Open5GS 5GC U-Plane.
 ./install/bin/open5gs-upfd &
 ```
 
-<h3 id="run_ran">Run srsRAN 5G ZMQ RAN</h3>
+<a id="run_ran"></a>
+
+### Run srsRAN 5G ZMQ RAN
 
 Run srsRAN 5G ZMQ RAN and connect to Open5GS 5GC.
 ```
@@ -424,7 +460,9 @@ The Open5GS C-Plane log when executed is as follows.
 08/26 20:36:19.009: [amf] INFO: gNB-N2[192.168.0.121] max_num_of_ostreams : 30 (../src/amf/amf-sm.c:780)
 ```
 
-<h3 id="run_ue">Run srsRAN 5G ZMQ UE</h3>
+<a id="run_ue"></a>
+
+### Run srsRAN 5G ZMQ UE
 
 Run srsRAN 5G ZMQ UE and connect to Open5GS 5GC.
 ```
@@ -527,11 +565,15 @@ The result of `ip addr show` on VM4 (UE) is as follows.
 ...
 ```
 
-<h2 id="ping">Ping google.com</h2>
+<a id="ping"></a>
+
+## Ping google.com
 
 Specify the TUN interface on VM4 (UE) and try `ping`.
 
-<h3 id="ping_1">Case for going through DN 10.45.0.0/16</h3>
+<a id="ping_1"></a>
+
+### Case for going through DN 10.45.0.0/16
 
 Execute `tcpdump` on VM2 (U-Plane) and check that the packet goes through `if=ogstun`.
 - `ping google.com` on VM4 (UE)
@@ -584,6 +626,8 @@ You could now create the end-to-end TUN interface on the DN and send any packets
 ---
 In investigating 5G SA, I have built a simulation environment and can now use a very useful system for investigating 5GC and MEC of 5G SA mobile network. I would like to thank the excellent developers and all the contributors of Open5GS, srsRAN Project and srsRAN 4G.
 
-<h2 id="changelog">Changelog (summary)</h2>
+<a id="changelog"></a>
+
+## Changelog (summary)
 
 - [2023.08.26] Initial release.
