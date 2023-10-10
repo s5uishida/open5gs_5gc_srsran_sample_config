@@ -75,8 +75,8 @@ The built simulation environment is as follows.
 
 The 5GC / UE / RAN used are as follows.
 - 5GC - Open5GS v2.6.4 (2023.08.26) - https://github.com/open5gs/open5gs
-- RAN - srsRAN Project (2023.08.26) - https://github.com/srsran/srsRAN_Project
-- UE (NR-UE) - srsRAN 4G (2023.08.26) - https://github.com/srsran/srsRAN_4G
+- RAN - srsRAN Project (2023.08.07) - https://github.com/srsran/srsRAN_Project
+- UE (NR-UE) - srsRAN 4G (2023.06.19) - https://github.com/srsran/srsRAN_4G
 
 Each VMs are as follows.  
 | VM # | SW & Role | IP address | OS | Memory <br> (Min) | HDD <br> (Min) |
@@ -122,8 +122,8 @@ In addition, I have not confirmed the communication performance.
 
 Please refer to the following for building Open5GS and srsRAN 5G ZMQ UE / RAN respectively.
 - Open5GS v2.6.4 (2023.08.26) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
-- srsRAN Project (RAN) (2023.08.26) - https://github.com/s5uishida/build_srsran_5g_zmq
-- srsRAN 4G (UE) (2023.08.26) - https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins
+- srsRAN Project (RAN) (2023.08.07) - https://github.com/s5uishida/build_srsran_5g_zmq
+- srsRAN 4G (UE) (2023.06.19) - https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins
 
 <a id="changes_cp"></a>
 
@@ -386,8 +386,8 @@ iptables -t nat -A POSTROUTING -s 10.45.0.0/16 ! -o ogstun -j MASQUERADE
 
 Please refer to the following for building Open5GS and srsRAN 5G ZMQ UE / RAN respectively.
 - Open5GS v2.6.4 (2023.08.26) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
-- srsRAN Project (RAN) (2023.08.26) - https://github.com/s5uishida/build_srsran_5g_zmq
-- srsRAN 4G (UE) (2023.08.26) - https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins
+- srsRAN Project (RAN) (2023.08.07) - https://github.com/s5uishida/build_srsran_5g_zmq
+- srsRAN 4G (UE) (2023.06.19) - https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins
 
 Install MongoDB on Open5GS 5GC C-Plane machine.
 It is not necessary to install MongoDB on Open5GS 5GC U-Plane machines.
