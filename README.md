@@ -74,7 +74,7 @@ The built simulation environment is as follows.
 <img src="./images/network-overview.png" title="./images/network-overview.png" width=1000px></img>
 
 The 5GC / UE / RAN used are as follows.
-- 5GC - Open5GS v2.6.6 (2023.10.11) - https://github.com/open5gs/open5gs
+- 5GC - Open5GS v2.6.6 (2023.10.10) - https://github.com/open5gs/open5gs
 - RAN - srsRAN Project (2023.09.20) - https://github.com/srsran/srsRAN_Project
 - UE (NR-UE) - srsRAN 4G (2023.06.19) - https://github.com/srsran/srsRAN_4G
 
@@ -121,7 +121,7 @@ In addition, I have not confirmed the communication performance.
 ## Changes in configuration files of Open5GS 5GC and srsRAN 5G ZMQ UE / RAN
 
 Please refer to the following for building Open5GS and srsRAN 5G ZMQ UE / RAN respectively.
-- Open5GS v2.6.6 (2023.10.11) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
+- Open5GS v2.6.6 (2023.10.10) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
 - srsRAN Project (RAN) (2023.09.20) - https://github.com/s5uishida/build_srsran_5g_zmq
 - srsRAN 4G (UE) (2023.06.19) - https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins
 
@@ -385,7 +385,7 @@ iptables -t nat -A POSTROUTING -s 10.45.0.0/16 ! -o ogstun -j MASQUERADE
 ## Build Open5GS and srsRAN 5G ZMQ UE / RAN
 
 Please refer to the following for building Open5GS and srsRAN 5G ZMQ UE / RAN respectively.
-- Open5GS v2.6.6 (2023.10.11) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
+- Open5GS v2.6.6 (2023.10.10) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
 - srsRAN Project (RAN) (2023.09.20) - https://github.com/s5uishida/build_srsran_5g_zmq
 - srsRAN 4G (UE) (2023.06.19) - https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins
 
