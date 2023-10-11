@@ -74,8 +74,8 @@ The built simulation environment is as follows.
 <img src="./images/network-overview.png" title="./images/network-overview.png" width=1000px></img>
 
 The 5GC / UE / RAN used are as follows.
-- 5GC - Open5GS v2.6.4 (2023.08.26) - https://github.com/open5gs/open5gs
-- RAN - srsRAN Project (2023.08.07) - https://github.com/srsran/srsRAN_Project
+- 5GC - Open5GS v2.6.6 (2023.10.11) - https://github.com/open5gs/open5gs
+- RAN - srsRAN Project (2023.09.20) - https://github.com/srsran/srsRAN_Project
 - UE (NR-UE) - srsRAN 4G (2023.06.19) - https://github.com/srsran/srsRAN_4G
 
 Each VMs are as follows.  
@@ -121,8 +121,8 @@ In addition, I have not confirmed the communication performance.
 ## Changes in configuration files of Open5GS 5GC and srsRAN 5G ZMQ UE / RAN
 
 Please refer to the following for building Open5GS and srsRAN 5G ZMQ UE / RAN respectively.
-- Open5GS v2.6.4 (2023.08.26) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
-- srsRAN Project (RAN) (2023.08.07) - https://github.com/s5uishida/build_srsran_5g_zmq
+- Open5GS v2.6.6 (2023.10.11) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
+- srsRAN Project (RAN) (2023.09.20) - https://github.com/s5uishida/build_srsran_5g_zmq
 - srsRAN 4G (UE) (2023.06.19) - https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins
 
 <a id="changes_cp"></a>
@@ -385,8 +385,8 @@ iptables -t nat -A POSTROUTING -s 10.45.0.0/16 ! -o ogstun -j MASQUERADE
 ## Build Open5GS and srsRAN 5G ZMQ UE / RAN
 
 Please refer to the following for building Open5GS and srsRAN 5G ZMQ UE / RAN respectively.
-- Open5GS v2.6.4 (2023.08.26) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
-- srsRAN Project (RAN) (2023.08.07) - https://github.com/s5uishida/build_srsran_5g_zmq
+- Open5GS v2.6.6 (2023.10.11) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
+- srsRAN Project (RAN) (2023.09.20) - https://github.com/s5uishida/build_srsran_5g_zmq
 - srsRAN 4G (UE) (2023.06.19) - https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins
 
 Install MongoDB on Open5GS 5GC C-Plane machine.
@@ -443,7 +443,7 @@ Run srsRAN 5G ZMQ RAN and connect to Open5GS 5GC.
 # ./gnb -c gnb_zmq.yaml
 Lower PHY in executor blocking mode.
 
---== srsRAN gNB (commit 1afd7240f) ==--
+--== srsRAN gNB (commit 5e6f50a20) ==--
 
 Connecting to AMF on 192.168.0.111:38412
 Available radio types: zmq.
@@ -454,10 +454,10 @@ Type <t> to view trace
 ```
 The Open5GS C-Plane log when executed is as follows.
 ```
-08/26 20:36:19.009: [amf] INFO: gNB-N2 accepted[192.168.0.121]:34049 in ng-path module (../src/amf/ngap-sctp.c:113)
-08/26 20:36:19.009: [amf] INFO: gNB-N2 accepted[192.168.0.121] in master_sm module (../src/amf/amf-sm.c:741)
-08/26 20:36:19.009: [amf] INFO: [Added] Number of gNBs is now 1 (../src/amf/context.c:1185)
-08/26 20:36:19.009: [amf] INFO: gNB-N2[192.168.0.121] max_num_of_ostreams : 30 (../src/amf/amf-sm.c:780)
+10/11 20:34:57.910: [amf] INFO: gNB-N2 accepted[192.168.0.121]:48052 in ng-path module (../src/amf/ngap-sctp.c:113)
+10/11 20:34:57.910: [amf] INFO: gNB-N2 accepted[192.168.0.121] in master_sm module (../src/amf/amf-sm.c:741)
+10/11 20:34:57.910: [amf] INFO: [Added] Number of gNBs is now 1 (../src/amf/context.c:1185)
+10/11 20:34:57.910: [amf] INFO: gNB-N2[192.168.0.121] max_num_of_ostreams : 30 (../src/amf/amf-sm.c:780)
 ```
 
 <a id="run_ue"></a>
@@ -490,69 +490,69 @@ RRC NR reconfiguration successful.
 ```
 The Open5GS C-Plane log when executed is as follows.
 ```
-08/26 20:40:03.421: [amf] INFO: InitialUEMessage (../src/amf/ngap-handler.c:401)
-08/26 20:40:03.421: [amf] INFO: [Added] Number of gNB-UEs is now 1 (../src/amf/context.c:2517)
-08/26 20:40:03.421: [amf] INFO:     RAN_UE_NGAP_ID[0] AMF_UE_NGAP_ID[1] TAC[1] CellID[0x19b0] (../src/amf/ngap-handler.c:562)
-08/26 20:40:03.422: [amf] INFO: [suci-0-001-01-0000-0-0-0000000000] Unknown UE by SUCI (../src/amf/context.c:1783)
-08/26 20:40:03.422: [amf] INFO: [Added] Number of AMF-UEs is now 1 (../src/amf/context.c:1570)
-08/26 20:40:03.422: [gmm] INFO: Registration request (../src/amf/gmm-sm.c:1061)
-08/26 20:40:03.422: [gmm] INFO: [suci-0-001-01-0000-0-0-0000000000]    SUCI (../src/amf/gmm-handler.c:152)
-08/26 20:40:03.424: [sbi] WARNING: [c2ecefdc-4404-41ee-8d77-61effdfd5ed3] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
-08/26 20:40:03.424: [sbi] WARNING: NF EndPoint updated [127.0.0.12:80] (../lib/sbi/context.c:1623)
-08/26 20:40:03.424: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-08/26 20:40:03.424: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-08/26 20:40:03.424: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-08/26 20:40:03.424: [sbi] INFO: [c2ecefdc-4404-41ee-8d77-61effdfd5ed3] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
-08/26 20:40:03.497: [sbi] WARNING: [c2f38676-4404-41ee-897b-714c7269bff3] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
-08/26 20:40:03.497: [sbi] WARNING: NF EndPoint updated [127.0.0.20:80] (../lib/sbi/context.c:1623)
-08/26 20:40:03.497: [sbi] WARNING: NF EndPoint updated [127.0.0.20:7777] (../lib/sbi/context.c:1532)
-08/26 20:40:03.497: [sbi] INFO: [c2f38676-4404-41ee-897b-714c7269bff3] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
-08/26 20:40:03.672: [gmm] INFO: [imsi-001010000000000] Registration complete (../src/amf/gmm-sm.c:1993)
-08/26 20:40:03.673: [amf] INFO: [imsi-001010000000000] Configuration update command (../src/amf/nas-path.c:612)
-08/26 20:40:03.673: [gmm] INFO:     UTC [2023-08-26T11:40:03] Timezone[0]/DST[0] (../src/amf/gmm-build.c:558)
-08/26 20:40:03.673: [gmm] INFO:     LOCAL [2023-08-26T20:40:03] Timezone[32400]/DST[0] (../src/amf/gmm-build.c:563)
-08/26 20:40:03.674: [amf] INFO: [Added] Number of AMF-Sessions is now 1 (../src/amf/context.c:2538)
-08/26 20:40:03.674: [gmm] INFO: UE SUPI[imsi-001010000000000] DNN[internet] S_NSSAI[SST:1 SD:0x1] (../src/amf/gmm-handler.c:1236)
-08/26 20:40:03.675: [smf] INFO: [Added] Number of SMF-UEs is now 1 (../src/smf/context.c:1010)
-08/26 20:40:03.676: [smf] INFO: [Added] Number of SMF-Sessions is now 1 (../src/smf/context.c:3050)
-08/26 20:40:03.677: [sbi] WARNING: [c2ecefdc-4404-41ee-8d77-61effdfd5ed3] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
-08/26 20:40:03.677: [sbi] WARNING: NF EndPoint updated [127.0.0.12:80] (../lib/sbi/context.c:1623)
-08/26 20:40:03.678: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-08/26 20:40:03.678: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-08/26 20:40:03.678: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-08/26 20:40:03.678: [sbi] INFO: [c2ecefdc-4404-41ee-8d77-61effdfd5ed3] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
-08/26 20:40:03.682: [sbi] WARNING: [c2f33194-4404-41ee-a96c-bf36659a8c7e] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
-08/26 20:40:03.682: [sbi] WARNING: NF EndPoint updated [127.0.0.13:80] (../lib/sbi/context.c:1623)
-08/26 20:40:03.682: [sbi] WARNING: NF EndPoint updated [127.0.0.13:7777] (../lib/sbi/context.c:1532)
-08/26 20:40:03.683: [sbi] WARNING: NF EndPoint updated [127.0.0.13:7777] (../lib/sbi/context.c:1532)
-08/26 20:40:03.683: [sbi] WARNING: NF EndPoint updated [127.0.0.13:7777] (../lib/sbi/context.c:1532)
-08/26 20:40:03.683: [sbi] INFO: [c2f33194-4404-41ee-a96c-bf36659a8c7e] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
-08/26 20:40:03.684: [sbi] WARNING: [c2f38676-4404-41ee-897b-714c7269bff3] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
-08/26 20:40:03.685: [sbi] WARNING: NF EndPoint updated [127.0.0.20:80] (../lib/sbi/context.c:1623)
-08/26 20:40:03.685: [sbi] WARNING: NF EndPoint updated [127.0.0.20:7777] (../lib/sbi/context.c:1532)
-08/26 20:40:03.685: [sbi] INFO: [c2f38676-4404-41ee-897b-714c7269bff3] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
-08/26 20:40:03.687: [sbi] WARNING: [c2ed08b4-4404-41ee-aaf6-bdb4eb0a4fb5] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
-08/26 20:40:03.687: [sbi] WARNING: NF EndPoint updated [127.0.0.15:80] (../lib/sbi/context.c:1623)
-08/26 20:40:03.688: [sbi] WARNING: NF EndPoint updated [127.0.0.15:7777] (../lib/sbi/context.c:1532)
-08/26 20:40:03.688: [sbi] INFO: [c2ed08b4-4404-41ee-aaf6-bdb4eb0a4fb5] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
-08/26 20:40:03.690: [smf] INFO: UE SUPI[imsi-001010000000000] DNN[internet] IPv4[10.45.0.2] IPv6[] (../src/smf/npcf-handler.c:539)
-08/26 20:40:03.691: [gtp] INFO: gtp_connect() [192.168.0.112]:2152 (../lib/gtp/path.c:60)
-08/26 20:40:03.723: [gmm] INFO: [imsi-001010000000000] No GUTI allocated (../src/amf/gmm-sm.c:1323)
-08/26 20:40:03.850: [sbi] WARNING: [c2ecefdc-4404-41ee-8d77-61effdfd5ed3] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
-08/26 20:40:03.851: [sbi] WARNING: NF EndPoint updated [127.0.0.12:80] (../lib/sbi/context.c:1623)
-08/26 20:40:03.851: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-08/26 20:40:03.851: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-08/26 20:40:03.851: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-08/26 20:40:03.851: [sbi] INFO: [c2ecefdc-4404-41ee-8d77-61effdfd5ed3] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
-08/26 20:40:03.853: [amf] INFO: [imsi-001010000000000:1:11][0:0:NULL] /nsmf-pdusession/v1/sm-contexts/{smContextRef}/modify (../src/amf/nsmf-handler.c:837)
+10/11 20:35:48.444: [amf] INFO: InitialUEMessage (../src/amf/ngap-handler.c:401)
+10/11 20:35:48.444: [amf] INFO: [Added] Number of gNB-UEs is now 1 (../src/amf/context.c:2523)
+10/11 20:35:48.444: [amf] INFO:     RAN_UE_NGAP_ID[0] AMF_UE_NGAP_ID[1] TAC[1] CellID[0x19b0] (../src/amf/ngap-handler.c:562)
+10/11 20:35:48.444: [amf] INFO: [suci-0-001-01-0000-0-0-0000000000] Unknown UE by SUCI (../src/amf/context.c:1789)
+10/11 20:35:48.444: [amf] INFO: [Added] Number of AMF-UEs is now 1 (../src/amf/context.c:1570)
+10/11 20:35:48.444: [gmm] INFO: Registration request (../src/amf/gmm-sm.c:1061)
+10/11 20:35:48.444: [gmm] INFO: [suci-0-001-01-0000-0-0-0000000000]    SUCI (../src/amf/gmm-handler.c:157)
+10/11 20:35:48.447: [sbi] WARNING: [2e5782e8-682a-41ee-a705-499077b49eb3] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
+10/11 20:35:48.447: [sbi] WARNING: NF EndPoint updated [127.0.0.12:80] (../lib/sbi/context.c:1623)
+10/11 20:35:48.447: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
+10/11 20:35:48.447: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
+10/11 20:35:48.447: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
+10/11 20:35:48.448: [sbi] INFO: [2e5782e8-682a-41ee-a705-499077b49eb3] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
+10/11 20:35:48.598: [sbi] WARNING: [2e5e0190-682a-41ee-8e27-abb8e1c20f56] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
+10/11 20:35:48.598: [sbi] WARNING: NF EndPoint updated [127.0.0.20:80] (../lib/sbi/context.c:1623)
+10/11 20:35:48.598: [sbi] WARNING: NF EndPoint updated [127.0.0.20:7777] (../lib/sbi/context.c:1532)
+10/11 20:35:48.598: [sbi] INFO: [2e5e0190-682a-41ee-8e27-abb8e1c20f56] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
+10/11 20:35:48.784: [gmm] INFO: [imsi-001010000000000] Registration complete (../src/amf/gmm-sm.c:1993)
+10/11 20:35:48.784: [amf] INFO: [imsi-001010000000000] Configuration update command (../src/amf/nas-path.c:612)
+10/11 20:35:48.784: [gmm] INFO:     UTC [2023-10-11T11:35:48] Timezone[0]/DST[0] (../src/amf/gmm-build.c:558)
+10/11 20:35:48.784: [gmm] INFO:     LOCAL [2023-10-11T20:35:48] Timezone[32400]/DST[0] (../src/amf/gmm-build.c:563)
+10/11 20:35:48.785: [amf] INFO: [Added] Number of AMF-Sessions is now 1 (../src/amf/context.c:2544)
+10/11 20:35:48.785: [gmm] INFO: UE SUPI[imsi-001010000000000] DNN[internet] S_NSSAI[SST:1 SD:0x1] (../src/amf/gmm-handler.c:1247)
+10/11 20:35:48.786: [smf] INFO: [Added] Number of SMF-UEs is now 1 (../src/smf/context.c:1010)
+10/11 20:35:48.786: [smf] INFO: [Added] Number of SMF-Sessions is now 1 (../src/smf/context.c:3057)
+10/11 20:35:48.788: [sbi] WARNING: [2e5782e8-682a-41ee-a705-499077b49eb3] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
+10/11 20:35:48.788: [sbi] WARNING: NF EndPoint updated [127.0.0.12:80] (../lib/sbi/context.c:1623)
+10/11 20:35:48.788: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
+10/11 20:35:48.788: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
+10/11 20:35:48.788: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
+10/11 20:35:48.788: [sbi] INFO: [2e5782e8-682a-41ee-a705-499077b49eb3] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
+10/11 20:35:48.792: [sbi] WARNING: [2e5e2e22-682a-41ee-89c7-c55c10685709] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
+10/11 20:35:48.793: [sbi] WARNING: NF EndPoint updated [127.0.0.13:80] (../lib/sbi/context.c:1623)
+10/11 20:35:48.793: [sbi] WARNING: NF EndPoint updated [127.0.0.13:7777] (../lib/sbi/context.c:1532)
+10/11 20:35:48.793: [sbi] WARNING: NF EndPoint updated [127.0.0.13:7777] (../lib/sbi/context.c:1532)
+10/11 20:35:48.793: [sbi] WARNING: NF EndPoint updated [127.0.0.13:7777] (../lib/sbi/context.c:1532)
+10/11 20:35:48.793: [sbi] INFO: [2e5e2e22-682a-41ee-89c7-c55c10685709] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
+10/11 20:35:48.795: [sbi] WARNING: [2e5e0190-682a-41ee-8e27-abb8e1c20f56] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
+10/11 20:35:48.795: [sbi] WARNING: NF EndPoint updated [127.0.0.20:80] (../lib/sbi/context.c:1623)
+10/11 20:35:48.795: [sbi] WARNING: NF EndPoint updated [127.0.0.20:7777] (../lib/sbi/context.c:1532)
+10/11 20:35:48.796: [sbi] INFO: [2e5e0190-682a-41ee-8e27-abb8e1c20f56] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
+10/11 20:35:48.798: [sbi] WARNING: [2e55269c-682a-41ee-a9d4-b7f30fd1a910] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
+10/11 20:35:48.798: [sbi] WARNING: NF EndPoint updated [127.0.0.15:80] (../lib/sbi/context.c:1623)
+10/11 20:35:48.798: [sbi] WARNING: NF EndPoint updated [127.0.0.15:7777] (../lib/sbi/context.c:1532)
+10/11 20:35:48.798: [sbi] INFO: [2e55269c-682a-41ee-a9d4-b7f30fd1a910] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
+10/11 20:35:48.801: [smf] INFO: UE SUPI[imsi-001010000000000] DNN[internet] IPv4[10.45.0.2] IPv6[] (../src/smf/npcf-handler.c:539)
+10/11 20:35:48.802: [gtp] INFO: gtp_connect() [192.168.0.112]:2152 (../lib/gtp/path.c:60)
+10/11 20:35:48.825: [gmm] INFO: [imsi-001010000000000] No GUTI allocated (../src/amf/gmm-sm.c:1323)
+10/11 20:35:48.954: [sbi] WARNING: [2e5782e8-682a-41ee-a705-499077b49eb3] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
+10/11 20:35:48.954: [sbi] WARNING: NF EndPoint updated [127.0.0.12:80] (../lib/sbi/context.c:1623)
+10/11 20:35:48.954: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
+10/11 20:35:48.954: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
+10/11 20:35:48.954: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
+10/11 20:35:48.955: [sbi] INFO: [2e5782e8-682a-41ee-a705-499077b49eb3] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
+10/11 20:35:48.957: [amf] INFO: [imsi-001010000000000:1:11][0:0:NULL] /nsmf-pdusession/v1/sm-contexts/{smContextRef}/modify (../src/amf/nsmf-handler.c:837)
 ```
 The Open5GS U-Plane log when executed is as follows.
 ```
-08/26 20:40:03.486: [upf] INFO: [Added] Number of UPF-Sessions is now 1 (../src/upf/context.c:206)
-08/26 20:40:03.486: [gtp] INFO: gtp_connect() [192.168.0.111]:2152 (../lib/gtp/path.c:60)
-08/26 20:40:03.486: [upf] INFO: UE F-SEID[UP:0xa34 CP:0xf49] APN[internet] PDN-Type[1] IPv4[10.45.0.2] IPv6[] (../src/upf/context.c:483)
-08/26 20:40:03.486: [upf] INFO: UE F-SEID[UP:0xa34 CP:0xf49] APN[internet] PDN-Type[1] IPv4[10.45.0.2] IPv6[] (../src/upf/context.c:483)
-08/26 20:40:03.644: [gtp] INFO: gtp_connect() [192.168.0.121]:2152 (../lib/gtp/path.c:60)
+10/11 20:35:48.791: [upf] INFO: [Added] Number of UPF-Sessions is now 1 (../src/upf/context.c:206)
+10/11 20:35:48.791: [gtp] INFO: gtp_connect() [192.168.0.111]:2152 (../lib/gtp/path.c:60)
+10/11 20:35:48.791: [upf] INFO: UE F-SEID[UP:0x3c9 CP:0x7c9] APN[internet] PDN-Type[1] IPv4[10.45.0.2] IPv6[] (../src/upf/context.c:483)
+10/11 20:35:48.791: [upf] INFO: UE F-SEID[UP:0x3c9 CP:0x7c9] APN[internet] PDN-Type[1] IPv4[10.45.0.2] IPv6[] (../src/upf/context.c:483)
+10/11 20:35:48.942: [gtp] INFO: gtp_connect() [192.168.0.121]:2152 (../lib/gtp/path.c:60)
 ```
 The result of `ip addr show` on VM4 (UE) is as follows.
 ```
@@ -579,22 +579,22 @@ Execute `tcpdump` on VM2 (U-Plane) and check that the packet goes through `if=og
 - `ping google.com` on VM4 (UE)
 ```
 # ping google.com -I tun_srsue -n
-PING google.com (142.251.42.174) from 10.45.0.2 tun_srsue: 56(84) bytes of data.
-64 bytes from 142.251.42.174: icmp_seq=1 ttl=61 time=97.8 ms
-64 bytes from 142.251.42.174: icmp_seq=2 ttl=61 time=110 ms
-64 bytes from 142.251.42.174: icmp_seq=3 ttl=61 time=62.2 ms
+PING google.com (142.251.222.14) from 10.45.0.2 tun_srsue: 56(84) bytes of data.
+64 bytes from 142.251.222.14: icmp_seq=1 ttl=61 time=99.1 ms
+64 bytes from 142.251.222.14: icmp_seq=2 ttl=61 time=71.1 ms
+64 bytes from 142.251.222.14: icmp_seq=3 ttl=61 time=71.9 ms
 ```
 - Run `tcpdump` on VM2 (U-Plane)
 ```
 # tcpdump -i ogstun -n
 tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
 listening on ogstun, link-type RAW (Raw IP), snapshot length 262144 bytes
-20:47:13.571542 IP 10.45.0.2 > 142.251.42.174: ICMP echo request, id 15, seq 1, length 64
-20:47:13.622894 IP 142.251.42.174 > 10.45.0.2: ICMP echo reply, id 15, seq 1, length 64
-20:47:14.594146 IP 10.45.0.2 > 142.251.42.174: ICMP echo request, id 15, seq 2, length 64
-20:47:14.636428 IP 142.251.42.174 > 10.45.0.2: ICMP echo reply, id 15, seq 2, length 64
-20:47:15.558303 IP 10.45.0.2 > 142.251.42.174: ICMP echo request, id 15, seq 3, length 64
-20:47:15.590656 IP 142.251.42.174 > 10.45.0.2: ICMP echo reply, id 15, seq 3, length 64
+20:38:08.302516 IP 10.45.0.2 > 142.251.222.14: ICMP echo request, id 4, seq 1, length 64
+20:38:08.343237 IP 142.251.222.14 > 10.45.0.2: ICMP echo reply, id 4, seq 1, length 64
+20:38:09.298801 IP 10.45.0.2 > 142.251.222.14: ICMP echo request, id 4, seq 2, length 64
+20:38:09.315035 IP 142.251.222.14 > 10.45.0.2: ICMP echo reply, id 4, seq 2, length 64
+20:38:10.297658 IP 10.45.0.2 > 142.251.222.14: ICMP echo request, id 4, seq 3, length 64
+20:38:10.312919 IP 142.251.222.14 > 10.45.0.2: ICMP echo reply, id 4, seq 3, length 64
 ```
 In addition to `ping`, you may try to access the web by specifying the TUNnel interface with `curl` as follows.
 - Run `curl google.com` on VM4 (UE)
@@ -609,17 +609,17 @@ The document has moved
 ```
 - Run `tcpdump` on VM2 (U-Plane)
 ```
-20:51:21.242637 IP 10.45.0.2.51352 > 172.217.175.46.80: Flags [S], seq 3235253881, win 64240, options [mss 1460,sackOK,TS val 1578503673 ecr 0,nop,wscale 7], length 0
-20:51:21.262459 IP 172.217.175.46.80 > 10.45.0.2.51352: Flags [S.], seq 3840001, ack 3235253882, win 65535, options [mss 1460], length 0
-20:51:21.304238 IP 10.45.0.2.51352 > 172.217.175.46.80: Flags [.], ack 1, win 64240, length 0
-20:51:21.304284 IP 10.45.0.2.51352 > 172.217.175.46.80: Flags [P.], seq 1:75, ack 1, win 64240, length 74: HTTP: GET / HTTP/1.1
-20:51:21.304392 IP 172.217.175.46.80 > 10.45.0.2.51352: Flags [.], ack 75, win 65535, length 0
-20:51:21.363525 IP 172.217.175.46.80 > 10.45.0.2.51352: Flags [P.], seq 1:774, ack 75, win 65535, length 773: HTTP: HTTP/1.1 301 Moved Permanently
-20:51:21.428603 IP 10.45.0.2.51352 > 172.217.175.46.80: Flags [.], ack 774, win 63467, length 0
-20:51:21.428647 IP 10.45.0.2.51352 > 172.217.175.46.80: Flags [F.], seq 75, ack 774, win 63467, length 0
-20:51:21.428830 IP 172.217.175.46.80 > 10.45.0.2.51352: Flags [.], ack 76, win 65535, length 0
-20:51:21.444976 IP 172.217.175.46.80 > 10.45.0.2.51352: Flags [F.], seq 774, ack 76, win 65535, length 0
-20:51:21.484811 IP 10.45.0.2.51352 > 172.217.175.46.80: Flags [.], ack 775, win 63467, length 0
+20:38:57.723802 IP 10.45.0.2.45166 > 142.251.222.14.80: Flags [S], seq 2746546244, win 64240, options [mss 1460,sackOK,TS val 3051146979 ecr 0,nop,wscale 7], length 0
+20:38:57.739849 IP 142.251.222.14.80 > 10.45.0.2.45166: Flags [S.], seq 2176001, ack 2746546245, win 65535, options [mss 1460], length 0
+20:38:57.789814 IP 10.45.0.2.45166 > 142.251.222.14.80: Flags [.], ack 1, win 64240, length 0
+20:38:57.790039 IP 10.45.0.2.45166 > 142.251.222.14.80: Flags [P.], seq 1:75, ack 1, win 64240, length 74: HTTP: GET / HTTP/1.1
+20:38:57.790157 IP 142.251.222.14.80 > 10.45.0.2.45166: Flags [.], ack 75, win 65535, length 0
+20:38:57.851657 IP 142.251.222.14.80 > 10.45.0.2.45166: Flags [P.], seq 1:774, ack 75, win 65535, length 773: HTTP: HTTP/1.1 301 Moved Permanently
+20:38:57.885404 IP 10.45.0.2.45166 > 142.251.222.14.80: Flags [.], ack 774, win 63467, length 0
+20:38:57.885452 IP 10.45.0.2.45166 > 142.251.222.14.80: Flags [F.], seq 75, ack 774, win 63467, length 0
+20:38:57.885548 IP 142.251.222.14.80 > 10.45.0.2.45166: Flags [.], ack 76, win 65535, length 0
+20:38:57.908163 IP 142.251.222.14.80 > 10.45.0.2.45166: Flags [F.], seq 774, ack 76, win 65535, length 0
+20:38:57.951607 IP 10.45.0.2.45166 > 142.251.222.14.80: Flags [.], ack 775, win 63467, length 0
 ```
 You could now create the end-to-end TUN interface on the DN and send any packets on the network.
 
@@ -630,4 +630,5 @@ In investigating 5G SA, I have built a simulation environment and can now use a 
 
 ## Changelog (summary)
 
+- [2023.10.11] Updated Open5GS v2.6.6 (2023.10.11) and srsRAN_Project (2023.09.20).
 - [2023.08.26] Initial release.
