@@ -79,12 +79,12 @@ The 5GC / UE / RAN used are as follows.
 - UE (NR-UE) - srsRAN 4G (2023.06.19) - https://github.com/srsran/srsRAN_4G
 
 Each VMs are as follows.  
-| VM # | SW & Role | IP address | OS | Memory <br> (Min) | HDD <br> (Min) |
-| --- | --- | --- | --- | --- | --- |
-| VM1 | Open5GS 5GC C-Plane | 192.168.0.111/24 | Ubuntu 22.04 | 1GB | 20GB |
-| VM2 | Open5GS 5GC U-Plane  | 192.168.0.112/24 | Ubuntu 22.04 | 1GB | 20GB |
-| VM3 | srsRAN Project ZMQ RAN (gNodeB) | 192.168.0.121/24 | Ubuntu 22.04 | 4GB | 10GB |
-| VM4 | srsRAN 4G ZMQ UE (NR-UE) | 192.168.0.122/24 | Ubuntu 22.04 | 2GB | 10GB |
+| VM # | SW & Role | IP address | OS | CPU <br> (Min) | Memory <br> (Min) | HDD <br> (Min) |
+| --- | --- | --- | --- | --- | --- | --- |
+| VM1 | Open5GS 5GC C-Plane | 192.168.0.111/24 | Ubuntu 22.04 | 1 | 1GB | 20GB |
+| VM2 | Open5GS 5GC U-Plane  | 192.168.0.112/24 | Ubuntu 22.04 | 1 | 1GB | 20GB |
+| VM3 | srsRAN Project ZMQ RAN (gNodeB) | 192.168.0.121/24 | Ubuntu 22.04 | 2 | 4GB | 10GB |
+| VM4 | srsRAN 4G ZMQ UE (NR-UE) | 192.168.0.122/24 | Ubuntu 22.04 | 1 | 2GB | 10GB |
 
 AMF & SMF addresses are as follows.  
 | NF | IP address | IP address on SBI | Supported S-NSSAI |
