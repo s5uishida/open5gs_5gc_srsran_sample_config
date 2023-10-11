@@ -83,8 +83,8 @@ Each VMs are as follows.
 | --- | --- | --- | --- | --- | --- | --- |
 | VM1 | Open5GS 5GC C-Plane | 192.168.0.111/24 | Ubuntu 22.04 | 1 | 1GB | 20GB |
 | VM2 | Open5GS 5GC U-Plane  | 192.168.0.112/24 | Ubuntu 22.04 | 1 | 1GB | 20GB |
-| VM3 | srsRAN Project ZMQ RAN (gNodeB) | 192.168.0.121/24 | Ubuntu 22.04 | 2 | 4GB | 10GB |
-| VM4 | srsRAN 4G ZMQ UE (NR-UE) | 192.168.0.122/24 | Ubuntu 22.04 | 1 | 2GB | 10GB |
+| VM3 | srsRAN Project ZMQ RAN<br>(gNodeB) | 192.168.0.121/24 | Ubuntu 22.04 | 2 | 4GB | 10GB |
+| VM4 | srsRAN 4G ZMQ UE<br>(NR-UE) | 192.168.0.122/24 | Ubuntu 22.04 | 1 | 2GB | 10GB |
 
 AMF & SMF addresses are as follows.  
 | NF | IP address | IP address on SBI | Supported S-NSSAI |
