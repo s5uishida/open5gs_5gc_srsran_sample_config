@@ -630,5 +630,5 @@ In investigating 5G SA, I have built a simulation environment and can now use a 
 
 ## Changelog (summary)
 
-- [2023.10.11] Updated Open5GS v2.6.6 (2023.10.11) and srsRAN_Project (2023.09.20).
+- [2023.10.11] Updated Open5GS v2.6.6 (2023.10.10) and srsRAN_Project (2023.09.20).
 - [2023.08.26] Initial release.
