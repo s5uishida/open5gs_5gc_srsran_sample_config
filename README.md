@@ -268,7 +268,7 @@ See [here](https://github.com/s5uishida/build_srsran_5g_zmq#create-the-configura
 - `srsRAN_Project/build/apps/gnb/gnb_zmq.yaml`
 ```diff
 --- gnb_zmq.yaml.orig   2023-07-07 00:32:21.000000000 +0900
-+++ gnb_zmq.yaml        2023-08-26 18:06:39.534791708 +0900
++++ gnb_zmq.yaml        2023-10-21 22:27:18.287923194 +0900
 @@ -3,13 +3,19 @@
  # To run the srsRAN Project gNB with this config, use the following command: 
  #   sudo ./gnb -c gnb_zmq.yaml
@@ -292,7 +292,7 @@ See [here](https://github.com/s5uishida/build_srsran_5g_zmq#create-the-configura
    srate: 11.52                      # RF sample rate might need to be adjusted according to selected bandwidth.
    tx_gain: 75                       # Transmit gain of the RF might need to adjusted to the given situation.
    rx_gain: 75                       # Receive gain of the RF might need to adjusted to the given situation.
-@@ -20,7 +26,7 @@
+@@ -20,11 +26,13 @@
    channel_bandwidth_MHz: 10         # Bandwith in MHz. Number of PRBs will be automatically derived.
    common_scs: 15                    # Subcarrier spacing in kHz used for data.
    plmn: "00101"                     # PLMN broadcasted by the gNB.
@@ -301,6 +301,12 @@ See [here](https://github.com/s5uishida/build_srsran_5g_zmq#create-the-configura
    pdcch:
      dedicated:
        ss2_type: common              # Search Space type, has to be set to common
+       dci_format_0_1_and_1_1: false # Set correct DCI format (fallback)
++  prach:
++    prach_config_index: 1
+ 
+ log:
+   filename: /tmp/gnb.log            # Path of the log file.
 ```
 
 <a id="changes_ue"></a>
@@ -630,5 +636,6 @@ In investigating 5G SA, I have built a simulation environment and can now use a 
 
 ## Changelog (summary)
 
+- [2023.10.21] Updated `gnb_zmq.yaml` according to srsRAN_Project 23.10 (2023.10.20).
 - [2023.10.11] Updated Open5GS v2.6.6 (2023.10.10) and srsRAN_Project (2023.09.20).
 - [2023.08.26] Initial release.
