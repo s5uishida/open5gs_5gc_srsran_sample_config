@@ -47,14 +47,14 @@ The built simulation environment is as follows.
 <img src="./images/network-overview.png" title="./images/network-overview.png" width=1000px></img>
 
 The 5GC / UE / RAN used are as follows.
-- 5GC - Open5GS v2.6.6 (2023.10.10) - https://github.com/open5gs/open5gs
-- RAN - srsRAN Project (2023.09.20) - https://github.com/srsran/srsRAN_Project
-- UE (NR-UE) - srsRAN 4G (2023.06.19) - https://github.com/srsran/srsRAN_4G
+- 5GC - Open5GS v2.7.0 (2024.03.24) - https://github.com/open5gs/open5gs
+- RAN - srsRAN Project (2024.03.25) - https://github.com/srsran/srsRAN_Project
+- UE (NR-UE) - srsRAN 4G (2024.02.01) - https://github.com/srsran/srsRAN_4G
 
 Each VMs are as follows.  
 | VM | SW & Role | IP address | OS | CPU <br> (Min) | Memory <br> (Min) | HDD <br> (Min) |
 | --- | --- | --- | --- | --- | --- | --- |
-| VM1 | Open5GS 5GC C-Plane | 192.168.0.111/24 | Ubuntu 22.04 | 1 | 1GB | 20GB |
+| VM1 | Open5GS 5GC C-Plane | 192.168.0.111/24 | Ubuntu 22.04 | 1 | 2GB | 20GB |
 | VM2 | Open5GS 5GC U-Plane  | 192.168.0.112/24 | Ubuntu 22.04 | 1 | 1GB | 20GB |
 | VM3 | srsRAN Project ZMQ RAN<br>(gNodeB) | 192.168.0.121/24 | Ubuntu 22.04 | 2 | 4GB | 10GB |
 | VM4 | srsRAN 4G ZMQ UE<br>(NR-UE) | 192.168.0.122/24 | Ubuntu 22.04 | 1 | 2GB | 10GB |
@@ -94,9 +94,9 @@ In addition, I have not confirmed the communication performance.
 ## Changes in configuration files of Open5GS 5GC and srsRAN 5G ZMQ UE / RAN
 
 Please refer to the following for building Open5GS and srsRAN 5G ZMQ UE / RAN respectively.
-- Open5GS v2.6.6 (2023.10.10) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
-- srsRAN Project (RAN) (2023.09.20) - https://github.com/s5uishida/build_srsran_5g_zmq
-- srsRAN 4G (UE) (2023.06.19) - https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins
+- Open5GS v2.7.0 (2024.03.24) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
+- srsRAN Project (RAN) (2024.03.25) - https://github.com/s5uishida/build_srsran_5g_zmq
+- srsRAN 4G (UE) (2024.02.01) - https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins
 
 <a id="changes_cp"></a>
 
@@ -116,89 +116,109 @@ For the sake of simplicity, I used only DNN this time. Please refer to [here](ht
 
 - `open5gs/install/etc/open5gs/amf.yaml`
 ```diff
---- amf.yaml.orig       2023-08-26 17:34:58.000000000 +0900
-+++ amf.yaml    2023-08-26 17:55:14.356847505 +0900
-@@ -474,28 +474,29 @@
-       - addr: 127.0.0.5
-         port: 7777
-     ngap:
--      - addr: 127.0.0.5
-+      - addr: 192.168.0.111
-     metrics:
-       - addr: 127.0.0.5
+--- amf.yaml.orig       2024-03-24 15:36:48.000000000 +0900
++++ amf.yaml    2024-03-29 22:14:08.359119294 +0900
+@@ -19,29 +19,30 @@
+         - uri: http://127.0.0.200:7777
+   ngap:
+     server:
+-      - address: 127.0.0.5
++      - address: 192.168.0.111
+   metrics:
+     server:
+       - address: 127.0.0.5
          port: 9090
-     guami:
-       - plmn_id:
--          mcc: 999
--          mnc: 70
-+          mcc: 001
-+          mnc: 01
-         amf_id:
-           region: 2
-           set: 1
-     tai:
-       - plmn_id:
--          mcc: 999
--          mnc: 70
-+          mcc: 001
-+          mnc: 01
-         tac: 1
-     plmn_support:
-       - plmn_id:
--          mcc: 999
--          mnc: 70
-+          mcc: 001
-+          mnc: 01
-         s_nssai:
-           - sst: 1
-+            sd: 000001
-     security:
-         integrity_order : [ NIA2, NIA1, NIA0 ]
-         ciphering_order : [ NEA0, NEA1, NEA2 ]
+   guami:
+     - plmn_id:
+-        mcc: 999
+-        mnc: 70
++        mcc: 001
++        mnc: 01
+       amf_id:
+         region: 2
+         set: 1
+   tai:
+     - plmn_id:
+-        mcc: 999
+-        mnc: 70
++        mcc: 001
++        mnc: 01
+       tac: 1
+   plmn_support:
+     - plmn_id:
+-        mcc: 999
+-        mnc: 70
++        mcc: 001
++        mnc: 01
+       s_nssai:
+         - sst: 1
++          sd: 000001
+   security:
+     integrity_order : [ NIA2, NIA1, NIA0 ]
+     ciphering_order : [ NEA0, NEA1, NEA2 ]
+```
+- `open5gs/install/etc/open5gs/nrf.yaml`
+```diff
+--- nrf.yaml.orig       2024-03-24 15:36:48.000000000 +0900
++++ nrf.yaml    2024-03-29 22:38:40.866371099 +0900
+@@ -10,8 +10,8 @@
+ nrf:
+   serving:  # 5G roaming requires PLMN in NRF
+     - plmn_id:
+-        mcc: 999
+-        mnc: 70
++        mcc: 001
++        mnc: 01
+   sbi:
+     server:
+       - address: 127.0.0.10
 ```
 - `open5gs/install/etc/open5gs/smf.yaml`
 ```diff
---- smf.yaml.orig       2023-08-26 17:34:58.000000000 +0900
-+++ smf.yaml    2023-08-26 17:54:41.609843715 +0900
-@@ -602,25 +602,20 @@
-       - addr: 127.0.0.4
-         port: 7777
-     pfcp:
--      - addr: 127.0.0.4
--      - addr: ::1
-+      - addr: 192.168.0.111
-     gtpc:
-       - addr: 127.0.0.4
--      - addr: ::1
-     gtpu:
--      - addr: 127.0.0.4
--      - addr: ::1
-+      - addr: 192.168.0.111
-     metrics:
-       - addr: 127.0.0.4
+--- smf.yaml.orig       2024-03-24 15:36:48.000000000 +0900
++++ smf.yaml    2024-03-29 22:16:10.817815924 +0900
+@@ -19,35 +19,34 @@
+         - uri: http://127.0.0.200:7777
+   pfcp:
+     server:
+-      - address: 127.0.0.4
++      - address: 192.168.0.111
+     client:
+       upf:
+-        - address: 127.0.0.7
++        - address: 192.168.0.112
++          dnn: internet
+   gtpc:
+     server:
+       - address: 127.0.0.4
+   gtpu:
+     server:
+-      - address: 127.0.0.4
++      - address: 192.168.0.111
+   metrics:
+     server:
+       - address: 127.0.0.4
          port: 9090
-     subnet:
-       - addr: 10.45.0.1/16
--      - addr: 2001:db8:cafe::1/48
-+        dnn: internet
-     dns:
-       - 8.8.8.8
-       - 8.8.4.4
--      - 2001:4860:4860::8888
--      - 2001:4860:4860::8844
-     mtu: 1400
-     ctf:
-       enabled: auto
-@@ -808,7 +803,8 @@
- #
- upf:
-     pfcp:
--      - addr: 127.0.0.7
-+      - addr: 192.168.0.112
-+        dnn: internet
+   session:
+     - subnet: 10.45.0.1/16
+-    - subnet: 2001:db8:cafe::1/48
++      dnn: internet
+   dns:
+     - 8.8.8.8
+     - 8.8.4.4
+-    - 2001:4860:4860::8888
+-    - 2001:4860:4860::8844
+   mtu: 1400
+ #  p-cscf:
+ #    - 127.0.0.1
+ #    - ::1
+ #  ctf:
+ #    enabled: auto   # auto(default)|yes|no
+-  freeDiameter: /root/open5gs/install/etc/freeDiameter/smf.conf
++#  freeDiameter: /root/open5gs/install/etc/freeDiameter/smf.conf
  
- #
- #  o Disable use of IPv4 addresses (only IPv6)
+ ################################################################################
+ # SMF Info
 ```
 
 <a id="changes_up"></a>
@@ -207,25 +227,29 @@ For the sake of simplicity, I used only DNN this time. Please refer to [here](ht
 
 - `open5gs/install/etc/open5gs/upf.yaml`
 ```diff
---- upf.yaml.orig       2023-08-26 17:34:58.000000000 +0900
-+++ upf.yaml    2023-08-26 17:57:55.068477294 +0900
-@@ -196,12 +196,13 @@
- #
+--- upf.yaml.orig       2024-03-24 15:36:48.000000000 +0900
++++ upf.yaml    2024-03-29 22:18:51.683148805 +0900
+@@ -10,16 +10,17 @@
  upf:
-     pfcp:
--      - addr: 127.0.0.7
-+      - addr: 192.168.0.112
-     gtpu:
--      - addr: 127.0.0.7
-+      - addr: 192.168.0.112
-     subnet:
-       - addr: 10.45.0.1/16
--      - addr: 2001:db8:cafe::1/48
-+        dnn: internet
-+        dev: ogstun
-     metrics:
-       - addr: 127.0.0.7
-         port: 9090
+   pfcp:
+     server:
+-      - address: 127.0.0.7
++      - address: 192.168.0.112
+     client:
+ #      smf:     #  UPF PFCP Client try to associate SMF PFCP Server
+ #        - address: 127.0.0.4
+   gtpu:
+     server:
+-      - address: 127.0.0.7
++      - address: 192.168.0.112
+   session:
+     - subnet: 10.45.0.1/16
+-    - subnet: 2001:db8:cafe::1/48
++      dnn: internet
++      dev: ogstun
+   metrics:
+     server:
+       - address: 127.0.0.7
 ```
 
 <a id="changes_srs"></a>
@@ -240,8 +264,8 @@ See [here](https://github.com/s5uishida/build_srsran_5g_zmq#create-the-configura
 
 - `srsRAN_Project/build/apps/gnb/gnb_zmq.yaml`
 ```diff
---- gnb_zmq.yaml.orig   2023-10-24 18:11:59.000000000 +0900
-+++ gnb_zmq.yaml        2023-11-03 02:16:30.316037273 +0900
+--- gnb_zmq.yaml.orig   2023-12-07 03:04:57.000000000 +0900
++++ gnb_zmq.yaml        2024-03-29 23:28:40.073575914 +0900
 @@ -3,13 +3,19 @@
  # To run the srsRAN Project gNB with this config, use the following command: 
  #   sudo ./gnb -c gnb_zmq.yaml
@@ -260,20 +284,20 @@ See [here](https://github.com/s5uishida/build_srsran_5g_zmq#create-the-configura
  
  ru_sdr:
    device_driver: zmq                # The RF driver name.
--  device_args: tx_port=tcp://127.0.0.1:2000,rx_port=tcp://127.0.0.1:2001,base_srate=11.52e6 # Optionally pass arguments to the selected RF driver.
-+  device_args: tx_port=tcp://192.168.0.121:2000,rx_port=tcp://192.168.0.122:2001,base_srate=11.52e6 # Optionally pass arguments to the selected RF driver.
-   srate: 11.52                      # RF sample rate might need to be adjusted according to selected bandwidth.
+-  device_args: tx_port=tcp://127.0.0.1:2000,rx_port=tcp://127.0.0.1:2001,base_srate=23.04e6 # Optionally pass arguments to the selected RF driver.
++  device_args: tx_port=tcp://192.168.0.121:2000,rx_port=tcp://192.168.0.122:2001,base_srate=23.04e6 # Optionally pass arguments to the selected RF driver.
+   srate: 23.04                      # RF sample rate might need to be adjusted according to selected bandwidth.
    tx_gain: 75                       # Transmit gain of the RF might need to adjusted to the given situation.
    rx_gain: 75                       # Receive gain of the RF might need to adjusted to the given situation.
 @@ -20,7 +26,7 @@
-   channel_bandwidth_MHz: 10         # Bandwith in MHz. Number of PRBs will be automatically derived.
+   channel_bandwidth_MHz: 20         # Bandwith in MHz. Number of PRBs will be automatically derived.
    common_scs: 15                    # Subcarrier spacing in kHz used for data.
    plmn: "00101"                     # PLMN broadcasted by the gNB.
 -  tac: 7                            # Tracking area code (needs to match the core configuration).
 +  tac: 1                            # Tracking area code (needs to match the core configuration).
    pdcch:
-     dedicated:
-       ss2_type: common              # Search Space type, has to be set to common
+     common:
+       ss0_index: 0                  # Set search space zero index to match srsUE capabilities
 ```
 
 <a id="changes_ue"></a>
@@ -284,18 +308,18 @@ See [here](https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins#c
 
 - `srsRAN_4G/build/srsue/ue_zmq.conf`
 ```diff
---- ue_zmq.conf.orig    2023-04-24 18:36:33.000000000 +0900
-+++ ue_zmq.conf 2023-08-26 18:09:17.043564563 +0900
+--- ue_zmq.conf.orig    2023-12-07 03:04:57.000000000 +0900
++++ ue_zmq.conf 2024-03-29 22:41:01.107838116 +0900
 @@ -6,7 +6,7 @@
  nof_antennas = 1
  
  device_name = zmq
--device_args = tx_port=tcp://127.0.0.1:2001,rx_port=tcp://127.0.0.1:2000,base_srate=11.52e6
-+device_args = tx_port=tcp://192.168.0.122:2001,rx_port=tcp://192.168.0.121:2000,base_srate=11.52e6
+-device_args = tx_port=tcp://127.0.0.1:2001,rx_port=tcp://127.0.0.1:2000,base_srate=23.04e6
++device_args = tx_port=tcp://192.168.0.122:2001,rx_port=tcp://192.168.0.121:2000,base_srate=23.04e6
  
  [rat.eutra]
  dl_earfcn = 2850
-@@ -32,9 +32,9 @@
+@@ -34,9 +34,9 @@
  [usim]
  mode = soft
  algo = milenage
@@ -308,7 +332,7 @@ See [here](https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins#c
  imei = 353490069873319
  
  [rrc]
-@@ -42,11 +42,16 @@
+@@ -44,11 +44,16 @@
  ue_category = 4
  
  [nas]
@@ -358,9 +382,9 @@ iptables -t nat -A POSTROUTING -s 10.45.0.0/16 ! -o ogstun -j MASQUERADE
 ## Build Open5GS and srsRAN 5G ZMQ UE / RAN
 
 Please refer to the following for building Open5GS and srsRAN 5G ZMQ UE / RAN respectively.
-- Open5GS v2.6.6 (2023.10.10) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
-- srsRAN Project (RAN) (2023.09.20) - https://github.com/s5uishida/build_srsran_5g_zmq
-- srsRAN 4G (UE) (2023.06.19) - https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins
+- Open5GS v2.7.0 (2024.03.24) - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
+- srsRAN Project (RAN) (2024.03.25) - https://github.com/s5uishida/build_srsran_5g_zmq
+- srsRAN 4G (UE) (2024.02.01) - https://github.com/s5uishida/build_srsran_4g_zmq_disable_rf_plugins
 
 Install MongoDB on Open5GS 5GC C-Plane machine.
 It is not necessary to install MongoDB on Open5GS 5GC U-Plane machines.
@@ -414,23 +438,25 @@ Run srsRAN 5G ZMQ RAN and connect to Open5GS 5GC.
 ```
 # cd srsRAN_Project/build/apps/gnb
 # ./gnb -c gnb_zmq.yaml
+
+The PRACH detector will not meet the performance requirements with the configuration {Format 0, ZCZ 0, SCS 1.25kHz, Rx ports 1}.
 Lower PHY in executor blocking mode.
 
---== srsRAN gNB (commit 5e6f50a20) ==--
+--== srsRAN gNB (commit 2f90c8b60) ==--
 
 Connecting to AMF on 192.168.0.111:38412
 Available radio types: zmq.
-Cell pci=1, bw=10 MHz, dl_arfcn=368500 (n3), dl_freq=1842.5 MHz, dl_ssb_arfcn=368410, ul_freq=1747.5 MHz
+Cell pci=1, bw=20 MHz, dl_arfcn=368500 (n3), dl_freq=1842.5 MHz, dl_ssb_arfcn=368410, ul_freq=1747.5 MHz
 
 ==== gNodeB started ===
 Type <t> to view trace
 ```
 The Open5GS C-Plane log when executed is as follows.
 ```
-10/11 20:34:57.910: [amf] INFO: gNB-N2 accepted[192.168.0.121]:48052 in ng-path module (../src/amf/ngap-sctp.c:113)
-10/11 20:34:57.910: [amf] INFO: gNB-N2 accepted[192.168.0.121] in master_sm module (../src/amf/amf-sm.c:741)
-10/11 20:34:57.910: [amf] INFO: [Added] Number of gNBs is now 1 (../src/amf/context.c:1185)
-10/11 20:34:57.910: [amf] INFO: gNB-N2[192.168.0.121] max_num_of_ostreams : 30 (../src/amf/amf-sm.c:780)
+03/30 00:09:23.278: [amf] INFO: gNB-N2 accepted[192.168.0.121]:39830 in ng-path module (../src/amf/ngap-sctp.c:113)
+03/30 00:09:23.278: [amf] INFO: gNB-N2 accepted[192.168.0.121] in master_sm module (../src/amf/amf-sm.c:754)
+03/30 00:09:23.284: [amf] INFO: [Added] Number of gNBs is now 1 (../src/amf/context.c:1236)
+03/30 00:09:23.284: [amf] INFO: gNB-N2[192.168.0.121] max_num_of_ostreams : 30 (../src/amf/amf-sm.c:793)
 ```
 
 <a id="run_ue"></a>
@@ -443,19 +469,19 @@ Run srsRAN 5G ZMQ UE and connect to Open5GS 5GC.
 # ./src/srsue ue_zmq.conf
 Reading configuration file ue_zmq.conf...
 
-Built in Release mode using commit fa56836b1 on branch master.
+Built in Release mode using commit ec29b0c1f on branch master.
 
-Opening 1 channels in RF device=zmq with args=tx_port=tcp://192.168.0.122:2001,rx_port=tcp://192.168.0.121:2000,base_srate=11.52e6
+Opening 1 channels in RF device=zmq with args=tx_port=tcp://192.168.0.122:2001,rx_port=tcp://192.168.0.121:2000,base_srate=23.04e6
 Supported RF device list: zmq file
-CHx base_srate=11.52e6
-Current sample rate is 1.92 MHz with a base rate of 11.52 MHz (x6 decimation)
+CHx base_srate=23.04e6
+Current sample rate is 1.92 MHz with a base rate of 23.04 MHz (x12 decimation)
 CH0 rx_port=tcp://192.168.0.121:2000
 CH0 tx_port=tcp://192.168.0.122:2001
-Current sample rate is 11.52 MHz with a base rate of 11.52 MHz (x1 decimation)
-Current sample rate is 11.52 MHz with a base rate of 11.52 MHz (x1 decimation)
+Current sample rate is 23.04 MHz with a base rate of 23.04 MHz (x1 decimation)
+Current sample rate is 23.04 MHz with a base rate of 23.04 MHz (x1 decimation)
 Waiting PHY to initialize ... done!
 Attaching UE...
-Random Access Transmission: prach_occasion=0, preamble_index=0, ra-rnti=0x39, tti=334
+Random Access Transmission: prach_occasion=0, preamble_index=0, ra-rnti=0x39, tti=174
 Random Access Complete.     c-rnti=0x4601, ta=0
 RRC Connected
 PDU Session Establishment successful. IP: 10.45.0.2
@@ -463,75 +489,83 @@ RRC NR reconfiguration successful.
 ```
 The Open5GS C-Plane log when executed is as follows.
 ```
-10/11 20:35:48.444: [amf] INFO: InitialUEMessage (../src/amf/ngap-handler.c:401)
-10/11 20:35:48.444: [amf] INFO: [Added] Number of gNB-UEs is now 1 (../src/amf/context.c:2523)
-10/11 20:35:48.444: [amf] INFO:     RAN_UE_NGAP_ID[0] AMF_UE_NGAP_ID[1] TAC[1] CellID[0x19b0] (../src/amf/ngap-handler.c:562)
-10/11 20:35:48.444: [amf] INFO: [suci-0-001-01-0000-0-0-0000000000] Unknown UE by SUCI (../src/amf/context.c:1789)
-10/11 20:35:48.444: [amf] INFO: [Added] Number of AMF-UEs is now 1 (../src/amf/context.c:1570)
-10/11 20:35:48.444: [gmm] INFO: Registration request (../src/amf/gmm-sm.c:1061)
-10/11 20:35:48.444: [gmm] INFO: [suci-0-001-01-0000-0-0-0000000000]    SUCI (../src/amf/gmm-handler.c:157)
-10/11 20:35:48.447: [sbi] WARNING: [2e5782e8-682a-41ee-a705-499077b49eb3] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
-10/11 20:35:48.447: [sbi] WARNING: NF EndPoint updated [127.0.0.12:80] (../lib/sbi/context.c:1623)
-10/11 20:35:48.447: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-10/11 20:35:48.447: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-10/11 20:35:48.447: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-10/11 20:35:48.448: [sbi] INFO: [2e5782e8-682a-41ee-a705-499077b49eb3] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
-10/11 20:35:48.598: [sbi] WARNING: [2e5e0190-682a-41ee-8e27-abb8e1c20f56] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
-10/11 20:35:48.598: [sbi] WARNING: NF EndPoint updated [127.0.0.20:80] (../lib/sbi/context.c:1623)
-10/11 20:35:48.598: [sbi] WARNING: NF EndPoint updated [127.0.0.20:7777] (../lib/sbi/context.c:1532)
-10/11 20:35:48.598: [sbi] INFO: [2e5e0190-682a-41ee-8e27-abb8e1c20f56] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
-10/11 20:35:48.784: [gmm] INFO: [imsi-001010000000000] Registration complete (../src/amf/gmm-sm.c:1993)
-10/11 20:35:48.784: [amf] INFO: [imsi-001010000000000] Configuration update command (../src/amf/nas-path.c:612)
-10/11 20:35:48.784: [gmm] INFO:     UTC [2023-10-11T11:35:48] Timezone[0]/DST[0] (../src/amf/gmm-build.c:558)
-10/11 20:35:48.784: [gmm] INFO:     LOCAL [2023-10-11T20:35:48] Timezone[32400]/DST[0] (../src/amf/gmm-build.c:563)
-10/11 20:35:48.785: [amf] INFO: [Added] Number of AMF-Sessions is now 1 (../src/amf/context.c:2544)
-10/11 20:35:48.785: [gmm] INFO: UE SUPI[imsi-001010000000000] DNN[internet] S_NSSAI[SST:1 SD:0x1] (../src/amf/gmm-handler.c:1247)
-10/11 20:35:48.786: [smf] INFO: [Added] Number of SMF-UEs is now 1 (../src/smf/context.c:1010)
-10/11 20:35:48.786: [smf] INFO: [Added] Number of SMF-Sessions is now 1 (../src/smf/context.c:3057)
-10/11 20:35:48.788: [sbi] WARNING: [2e5782e8-682a-41ee-a705-499077b49eb3] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
-10/11 20:35:48.788: [sbi] WARNING: NF EndPoint updated [127.0.0.12:80] (../lib/sbi/context.c:1623)
-10/11 20:35:48.788: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-10/11 20:35:48.788: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-10/11 20:35:48.788: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-10/11 20:35:48.788: [sbi] INFO: [2e5782e8-682a-41ee-a705-499077b49eb3] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
-10/11 20:35:48.792: [sbi] WARNING: [2e5e2e22-682a-41ee-89c7-c55c10685709] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
-10/11 20:35:48.793: [sbi] WARNING: NF EndPoint updated [127.0.0.13:80] (../lib/sbi/context.c:1623)
-10/11 20:35:48.793: [sbi] WARNING: NF EndPoint updated [127.0.0.13:7777] (../lib/sbi/context.c:1532)
-10/11 20:35:48.793: [sbi] WARNING: NF EndPoint updated [127.0.0.13:7777] (../lib/sbi/context.c:1532)
-10/11 20:35:48.793: [sbi] WARNING: NF EndPoint updated [127.0.0.13:7777] (../lib/sbi/context.c:1532)
-10/11 20:35:48.793: [sbi] INFO: [2e5e2e22-682a-41ee-89c7-c55c10685709] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
-10/11 20:35:48.795: [sbi] WARNING: [2e5e0190-682a-41ee-8e27-abb8e1c20f56] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
-10/11 20:35:48.795: [sbi] WARNING: NF EndPoint updated [127.0.0.20:80] (../lib/sbi/context.c:1623)
-10/11 20:35:48.795: [sbi] WARNING: NF EndPoint updated [127.0.0.20:7777] (../lib/sbi/context.c:1532)
-10/11 20:35:48.796: [sbi] INFO: [2e5e0190-682a-41ee-8e27-abb8e1c20f56] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
-10/11 20:35:48.798: [sbi] WARNING: [2e55269c-682a-41ee-a9d4-b7f30fd1a910] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
-10/11 20:35:48.798: [sbi] WARNING: NF EndPoint updated [127.0.0.15:80] (../lib/sbi/context.c:1623)
-10/11 20:35:48.798: [sbi] WARNING: NF EndPoint updated [127.0.0.15:7777] (../lib/sbi/context.c:1532)
-10/11 20:35:48.798: [sbi] INFO: [2e55269c-682a-41ee-a9d4-b7f30fd1a910] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
-10/11 20:35:48.801: [smf] INFO: UE SUPI[imsi-001010000000000] DNN[internet] IPv4[10.45.0.2] IPv6[] (../src/smf/npcf-handler.c:539)
-10/11 20:35:48.802: [gtp] INFO: gtp_connect() [192.168.0.112]:2152 (../lib/gtp/path.c:60)
-10/11 20:35:48.825: [gmm] INFO: [imsi-001010000000000] No GUTI allocated (../src/amf/gmm-sm.c:1323)
-10/11 20:35:48.954: [sbi] WARNING: [2e5782e8-682a-41ee-a705-499077b49eb3] (NF-discover) NF has already been added (../lib/sbi/nnrf-handler.c:833)
-10/11 20:35:48.954: [sbi] WARNING: NF EndPoint updated [127.0.0.12:80] (../lib/sbi/context.c:1623)
-10/11 20:35:48.954: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-10/11 20:35:48.954: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-10/11 20:35:48.954: [sbi] WARNING: NF EndPoint updated [127.0.0.12:7777] (../lib/sbi/context.c:1532)
-10/11 20:35:48.955: [sbi] INFO: [2e5782e8-682a-41ee-a705-499077b49eb3] (NF-discover) NF Profile updated (../lib/sbi/nnrf-handler.c:856)
-10/11 20:35:48.957: [amf] INFO: [imsi-001010000000000:1:11][0:0:NULL] /nsmf-pdusession/v1/sm-contexts/{smContextRef}/modify (../src/amf/nsmf-handler.c:837)
+03/30 00:09:27.594: [amf] INFO: InitialUEMessage (../src/amf/ngap-handler.c:401)
+03/30 00:09:27.594: [amf] INFO: [Added] Number of gNB-UEs is now 1 (../src/amf/context.c:2656)
+03/30 00:09:27.594: [amf] INFO:     RAN_UE_NGAP_ID[0] AMF_UE_NGAP_ID[1] TAC[1] CellID[0x66c000] (../src/amf/ngap-handler.c:562)
+03/30 00:09:27.594: [amf] INFO: [suci-0-001-01-0000-0-0-0000000000] Unknown UE by SUCI (../src/amf/context.c:1840)
+03/30 00:09:27.594: [amf] INFO: [Added] Number of AMF-UEs is now 1 (../src/amf/context.c:1621)
+03/30 00:09:27.594: [gmm] INFO: Registration request (../src/amf/gmm-sm.c:1224)
+03/30 00:09:27.594: [gmm] INFO: [suci-0-001-01-0000-0-0-0000000000]    SUCI (../src/amf/gmm-handler.c:172)
+03/30 00:09:27.596: [sbi] WARNING: [UDM] (NRF-discover) NF has already been added [4f2a980e-edde-41ee-a832-ebcdb6a42829:1] (../lib/sbi/nnrf-handler.c:1162)
+03/30 00:09:27.597: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.12:80] (../lib/sbi/context.c:2210)
+03/30 00:09:27.597: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.12:7777] (../lib/sbi/context.c:1946)
+03/30 00:09:27.597: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.12:7777] (../lib/sbi/context.c:1946)
+03/30 00:09:27.597: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.12:7777] (../lib/sbi/context.c:1946)
+03/30 00:09:27.597: [sbi] INFO: [UDM] (NF-discover) NF Profile updated [4f2a980e-edde-41ee-a832-ebcdb6a42829:1] (../lib/sbi/nnrf-handler.c:1200)
+03/30 00:09:27.600: [sbi] INFO: [UDM] (SCP-discover) NF registered [4f2a980e-edde-41ee-a832-ebcdb6a42829:1] (../lib/sbi/path.c:211)
+03/30 00:09:27.706: [sbi] WARNING: [UDR] (NRF-discover) NF has already been added [4f320f12-edde-41ee-aa40-170e22094cf8:1] (../lib/sbi/nnrf-handler.c:1162)
+03/30 00:09:27.706: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.20:80] (../lib/sbi/context.c:2210)
+03/30 00:09:27.707: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.20:7777] (../lib/sbi/context.c:1946)
+03/30 00:09:27.707: [sbi] INFO: [UDR] (NF-discover) NF Profile updated [4f320f12-edde-41ee-aa40-170e22094cf8:1] (../lib/sbi/nnrf-handler.c:1200)
+03/30 00:09:27.708: [sbi] INFO: [UDR] (SCP-discover) NF registered [4f320f12-edde-41ee-aa40-170e22094cf8:1] (../lib/sbi/path.c:211)
+03/30 00:09:27.858: [gmm] INFO: [imsi-001010000000000] Registration complete (../src/amf/gmm-sm.c:2321)
+03/30 00:09:27.858: [amf] INFO: [imsi-001010000000000] Configuration update command (../src/amf/nas-path.c:591)
+03/30 00:09:27.858: [gmm] INFO:     UTC [2024-03-29T15:09:27] Timezone[0]/DST[0] (../src/amf/gmm-build.c:558)
+03/30 00:09:27.858: [gmm] INFO:     LOCAL [2024-03-30T00:09:27] Timezone[32400]/DST[0] (../src/amf/gmm-build.c:563)
+03/30 00:09:27.859: [amf] INFO: [Added] Number of AMF-Sessions is now 1 (../src/amf/context.c:2677)
+03/30 00:09:27.859: [gmm] INFO: UE SUPI[imsi-001010000000000] DNN[internet] S_NSSAI[SST:1 SD:0x1] smContextRef [NULL] (../src/amf/gmm-handler.c:1285)
+03/30 00:09:27.859: [gmm] INFO: SMF Instance [4f3d2294-edde-41ee-b281-f5004b2ffb48] (../src/amf/gmm-handler.c:1324)
+03/30 00:09:27.860: [smf] INFO: [Added] Number of SMF-UEs is now 1 (../src/smf/context.c:1019)
+03/30 00:09:27.860: [smf] INFO: [Added] Number of SMF-Sessions is now 1 (../src/smf/context.c:3090)
+03/30 00:09:27.862: [sbi] WARNING: [UDM] (NRF-discover) NF has already been added [4f2a980e-edde-41ee-a832-ebcdb6a42829:1] (../lib/sbi/nnrf-handler.c:1162)
+03/30 00:09:27.862: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.12:80] (../lib/sbi/context.c:2210)
+03/30 00:09:27.862: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.12:7777] (../lib/sbi/context.c:1946)
+03/30 00:09:27.862: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.12:7777] (../lib/sbi/context.c:1946)
+03/30 00:09:27.862: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.12:7777] (../lib/sbi/context.c:1946)
+03/30 00:09:27.862: [sbi] INFO: [UDM] (NF-discover) NF Profile updated [4f2a980e-edde-41ee-a832-ebcdb6a42829:1] (../lib/sbi/nnrf-handler.c:1200)
+03/30 00:09:27.865: [sbi] INFO: [UDM] (SCP-discover) NF registered [4f2a980e-edde-41ee-a832-ebcdb6a42829:1] (../lib/sbi/path.c:211)
+03/30 00:09:27.867: [sbi] WARNING: [PCF] (NRF-discover) NF has already been added [4f31c57a-edde-41ee-beb6-e328e008752e:1] (../lib/sbi/nnrf-handler.c:1162)
+03/30 00:09:27.867: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.13:80] (../lib/sbi/context.c:2210)
+03/30 00:09:27.867: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.13:7777] (../lib/sbi/context.c:1946)
+03/30 00:09:27.867: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.13:7777] (../lib/sbi/context.c:1946)
+03/30 00:09:27.867: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.13:7777] (../lib/sbi/context.c:1946)
+03/30 00:09:27.867: [sbi] INFO: [PCF] (NF-discover) NF Profile updated [4f31c57a-edde-41ee-beb6-e328e008752e:1] (../lib/sbi/nnrf-handler.c:1200)
+03/30 00:09:27.869: [sbi] WARNING: [UDR] (NRF-discover) NF has already been added [4f320f12-edde-41ee-aa40-170e22094cf8:1] (../lib/sbi/nnrf-handler.c:1162)
+03/30 00:09:27.869: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.20:80] (../lib/sbi/context.c:2210)
+03/30 00:09:27.869: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.20:7777] (../lib/sbi/context.c:1946)
+03/30 00:09:27.869: [sbi] INFO: [UDR] (NF-discover) NF Profile updated [4f320f12-edde-41ee-aa40-170e22094cf8:1] (../lib/sbi/nnrf-handler.c:1200)
+03/30 00:09:27.871: [sbi] WARNING: [UDR] (SCP-discover) NF has already been added [4f320f12-edde-41ee-aa40-170e22094cf8:2] (../lib/sbi/path.c:216)
+03/30 00:09:27.872: [sbi] WARNING: [BSF] (NRF-discover) NF has already been added [4f2af72c-edde-41ee-9bf5-834c8a50b80e:1] (../lib/sbi/nnrf-handler.c:1162)
+03/30 00:09:27.872: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.15:80] (../lib/sbi/context.c:2210)
+03/30 00:09:27.872: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.15:7777] (../lib/sbi/context.c:1946)
+03/30 00:09:27.872: [sbi] INFO: [BSF] (NF-discover) NF Profile updated [4f2af72c-edde-41ee-9bf5-834c8a50b80e:1] (../lib/sbi/nnrf-handler.c:1200)
+03/30 00:09:27.873: [sbi] INFO: [BSF] (SCP-discover) NF registered [4f2af72c-edde-41ee-9bf5-834c8a50b80e:1] (../lib/sbi/path.c:211)
+03/30 00:09:27.875: [sbi] INFO: [PCF] (SCP-discover) NF registered [4f31c57a-edde-41ee-beb6-e328e008752e:1] (../lib/sbi/path.c:211)
+03/30 00:09:27.875: [smf] INFO: UE SUPI[imsi-001010000000000] DNN[internet] IPv4[10.45.0.2] IPv6[] (../src/smf/npcf-handler.c:542)
+03/30 00:09:27.876: [gtp] INFO: gtp_connect() [192.168.0.112]:2152 (../lib/gtp/path.c:60)
+03/30 00:09:28.014: [sbi] WARNING: [UDM] (NRF-discover) NF has already been added [4f2a980e-edde-41ee-a832-ebcdb6a42829:1] (../lib/sbi/nnrf-handler.c:1162)
+03/30 00:09:28.014: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.12:80] (../lib/sbi/context.c:2210)
+03/30 00:09:28.014: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.12:7777] (../lib/sbi/context.c:1946)
+03/30 00:09:28.014: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.12:7777] (../lib/sbi/context.c:1946)
+03/30 00:09:28.014: [sbi] WARNING: NF EndPoint(addr) updated [127.0.0.12:7777] (../lib/sbi/context.c:1946)
+03/30 00:09:28.015: [sbi] INFO: [UDM] (NF-discover) NF Profile updated [4f2a980e-edde-41ee-a832-ebcdb6a42829:1] (../lib/sbi/nnrf-handler.c:1200)
+03/30 00:09:28.016: [sbi] WARNING: [UDM] (SCP-discover) NF has already been added [4f2a980e-edde-41ee-a832-ebcdb6a42829:2] (../lib/sbi/path.c:216)
+03/30 00:09:28.017: [amf] INFO: [imsi-001010000000000:1:11][0:0:NULL] /nsmf-pdusession/v1/sm-contexts/{smContextRef}/modify (../src/amf/nsmf-handler.c:867)
+03/30 00:09:28.137: [gmm] INFO: [imsi-001010000000000] No GUTI allocated (../src/amf/gmm-sm.c:1599)
 ```
 The Open5GS U-Plane log when executed is as follows.
 ```
-10/11 20:35:48.791: [upf] INFO: [Added] Number of UPF-Sessions is now 1 (../src/upf/context.c:206)
-10/11 20:35:48.791: [gtp] INFO: gtp_connect() [192.168.0.111]:2152 (../lib/gtp/path.c:60)
-10/11 20:35:48.791: [upf] INFO: UE F-SEID[UP:0x3c9 CP:0x7c9] APN[internet] PDN-Type[1] IPv4[10.45.0.2] IPv6[] (../src/upf/context.c:483)
-10/11 20:35:48.791: [upf] INFO: UE F-SEID[UP:0x3c9 CP:0x7c9] APN[internet] PDN-Type[1] IPv4[10.45.0.2] IPv6[] (../src/upf/context.c:483)
-10/11 20:35:48.942: [gtp] INFO: gtp_connect() [192.168.0.121]:2152 (../lib/gtp/path.c:60)
+03/30 00:09:27.828: [upf] INFO: [Added] Number of UPF-Sessions is now 1 (../src/upf/context.c:208)
+03/30 00:09:27.828: [gtp] INFO: gtp_connect() [192.168.0.111]:2152 (../lib/gtp/path.c:60)
+03/30 00:09:27.828: [upf] INFO: UE F-SEID[UP:0x80 CP:0xc81] APN[internet] PDN-Type[1] IPv4[10.45.0.2] IPv6[] (../src/upf/context.c:485)
+03/30 00:09:27.828: [upf] INFO: UE F-SEID[UP:0x80 CP:0xc81] APN[internet] PDN-Type[1] IPv4[10.45.0.2] IPv6[] (../src/upf/context.c:485)
+03/30 00:09:27.965: [gtp] INFO: gtp_connect() [192.168.0.121]:2152 (../lib/gtp/path.c:60)
 ```
 The result of `ip addr show` on VM4 (UE) is as follows.
 ```
 # ip addr show
 ...
-5: tun_srsue: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UNKNOWN group default qlen 500
+11: tun_srsue: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UNKNOWN group default qlen 500
     link/none 
     inet 10.45.0.2/24 scope global tun_srsue
        valid_lft forever preferred_lft forever
@@ -552,22 +586,22 @@ Execute `tcpdump` on VM2 (U-Plane) and check that the packet goes through `if=og
 - `ping google.com` on VM4 (UE)
 ```
 # ping google.com -I tun_srsue -n
-PING google.com (142.251.222.14) from 10.45.0.2 tun_srsue: 56(84) bytes of data.
-64 bytes from 142.251.222.14: icmp_seq=1 ttl=61 time=99.1 ms
-64 bytes from 142.251.222.14: icmp_seq=2 ttl=61 time=71.1 ms
-64 bytes from 142.251.222.14: icmp_seq=3 ttl=61 time=71.9 ms
+PING google.com (172.217.175.110) from 10.45.0.2 tun_srsue: 56(84) bytes of data.
+64 bytes from 172.217.175.110: icmp_seq=1 ttl=61 time=75.0 ms
+64 bytes from 172.217.175.110: icmp_seq=2 ttl=61 time=90.5 ms
+64 bytes from 172.217.175.110: icmp_seq=3 ttl=61 time=63.3 ms
 ```
 - Run `tcpdump` on VM2 (U-Plane)
 ```
 # tcpdump -i ogstun -n
 tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
 listening on ogstun, link-type RAW (Raw IP), snapshot length 262144 bytes
-20:38:08.302516 IP 10.45.0.2 > 142.251.222.14: ICMP echo request, id 4, seq 1, length 64
-20:38:08.343237 IP 142.251.222.14 > 10.45.0.2: ICMP echo reply, id 4, seq 1, length 64
-20:38:09.298801 IP 10.45.0.2 > 142.251.222.14: ICMP echo request, id 4, seq 2, length 64
-20:38:09.315035 IP 142.251.222.14 > 10.45.0.2: ICMP echo reply, id 4, seq 2, length 64
-20:38:10.297658 IP 10.45.0.2 > 142.251.222.14: ICMP echo request, id 4, seq 3, length 64
-20:38:10.312919 IP 142.251.222.14 > 10.45.0.2: ICMP echo reply, id 4, seq 3, length 64
+00:09:34.045185 IP 10.45.0.2 > 172.217.175.110: ICMP echo request, id 9, seq 1, length 64
+00:09:34.063643 IP 172.217.175.110 > 10.45.0.2: ICMP echo reply, id 9, seq 1, length 64
+00:09:35.056189 IP 10.45.0.2 > 172.217.175.110: ICMP echo request, id 9, seq 2, length 64
+00:09:35.081234 IP 172.217.175.110 > 10.45.0.2: ICMP echo reply, id 9, seq 2, length 64
+00:09:36.042112 IP 10.45.0.2 > 172.217.175.110: ICMP echo request, id 9, seq 3, length 64
+00:09:36.057418 IP 172.217.175.110 > 10.45.0.2: ICMP echo reply, id 9, seq 3, length 64
 ```
 In addition to `ping`, you may try to access the web by specifying the TUNnel interface with `curl` as follows.
 - `curl google.com` on VM4 (UE)
@@ -582,17 +616,17 @@ The document has moved
 ```
 - Run `tcpdump` on VM2 (U-Plane)
 ```
-20:38:57.723802 IP 10.45.0.2.45166 > 142.251.222.14.80: Flags [S], seq 2746546244, win 64240, options [mss 1460,sackOK,TS val 3051146979 ecr 0,nop,wscale 7], length 0
-20:38:57.739849 IP 142.251.222.14.80 > 10.45.0.2.45166: Flags [S.], seq 2176001, ack 2746546245, win 65535, options [mss 1460], length 0
-20:38:57.789814 IP 10.45.0.2.45166 > 142.251.222.14.80: Flags [.], ack 1, win 64240, length 0
-20:38:57.790039 IP 10.45.0.2.45166 > 142.251.222.14.80: Flags [P.], seq 1:75, ack 1, win 64240, length 74: HTTP: GET / HTTP/1.1
-20:38:57.790157 IP 142.251.222.14.80 > 10.45.0.2.45166: Flags [.], ack 75, win 65535, length 0
-20:38:57.851657 IP 142.251.222.14.80 > 10.45.0.2.45166: Flags [P.], seq 1:774, ack 75, win 65535, length 773: HTTP: HTTP/1.1 301 Moved Permanently
-20:38:57.885404 IP 10.45.0.2.45166 > 142.251.222.14.80: Flags [.], ack 774, win 63467, length 0
-20:38:57.885452 IP 10.45.0.2.45166 > 142.251.222.14.80: Flags [F.], seq 75, ack 774, win 63467, length 0
-20:38:57.885548 IP 142.251.222.14.80 > 10.45.0.2.45166: Flags [.], ack 76, win 65535, length 0
-20:38:57.908163 IP 142.251.222.14.80 > 10.45.0.2.45166: Flags [F.], seq 774, ack 76, win 65535, length 0
-20:38:57.951607 IP 10.45.0.2.45166 > 142.251.222.14.80: Flags [.], ack 775, win 63467, length 0
+00:09:38.172434 IP 10.45.0.2.43418 > 172.217.175.110.80: Flags [S], seq 117491664, win 64240, options [mss 1460,sackOK,TS val 2512314474 ecr 0,nop,wscale 7], length 0
+00:09:38.189808 IP 172.217.175.110.80 > 10.45.0.2.43418: Flags [S.], seq 18240001, ack 117491665, win 65535, options [mss 1460], length 0
+00:09:38.266400 IP 10.45.0.2.43418 > 172.217.175.110.80: Flags [.], ack 1, win 64240, length 0
+00:09:38.266562 IP 10.45.0.2.43418 > 172.217.175.110.80: Flags [P.], seq 1:75, ack 1, win 64240, length 74: HTTP: GET / HTTP/1.1
+00:09:38.266667 IP 172.217.175.110.80 > 10.45.0.2.43418: Flags [.], ack 75, win 65535, length 0
+00:09:38.326674 IP 172.217.175.110.80 > 10.45.0.2.43418: Flags [P.], seq 1:774, ack 75, win 65535, length 773: HTTP: HTTP/1.1 301 Moved Permanently
+00:09:38.420663 IP 10.45.0.2.43418 > 172.217.175.110.80: Flags [.], ack 774, win 63467, length 0
+00:09:38.420712 IP 10.45.0.2.43418 > 172.217.175.110.80: Flags [F.], seq 75, ack 774, win 63467, length 0
+00:09:38.420826 IP 172.217.175.110.80 > 10.45.0.2.43418: Flags [.], ack 76, win 65535, length 0
+00:09:38.436939 IP 172.217.175.110.80 > 10.45.0.2.43418: Flags [F.], seq 774, ack 76, win 65535, length 0
+00:09:38.474196 IP 10.45.0.2.43418 > 172.217.175.110.80: Flags [.], ack 775, win 63467, length 0
 ```
 You could now create the end-to-end TUN interface on the DN and send any packets on the network.
 
@@ -603,6 +637,7 @@ In investigating 5G SA, I have built a simulation environment and can now use a 
 
 ## Changelog (summary)
 
+- [2024.03.29] Updated to Open5GS v2.7.0 (2024.03.24).
 - [2023.11.02] Updated `gnb_zmq.yaml`.
 - [2023.10.21] Updated `gnb_zmq.yaml` according to srsRAN_Project 23.10 (2023.10.20).
 - [2023.10.11] Updated Open5GS v2.6.6 (2023.10.10) and srsRAN_Project (2023.09.20).
