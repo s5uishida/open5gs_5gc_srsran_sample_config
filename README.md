@@ -637,7 +637,7 @@ In investigating 5G SA, I have built a simulation environment and can now use a 
 
 ## Changelog (summary)
 
-- [2024.03.31] Removed `gtpc` section in `smf.yaml`.
+- [2024.03.31] [This commit](https://github.com/open5gs/open5gs/commit/e8a3b76af395a9986234b7d339a7a96dc5bb537f) fixed the issue where SMF crashes without `gtpc` section in `smf.yaml`. So deleted the `gtpc` section in `smf.yaml` for 5G use.
 - [2024.03.29] Updated to Open5GS v2.7.0 (2024.03.24).
 - [2023.11.02] Updated `gnb_zmq.yaml`.
 - [2023.10.21] Updated `gnb_zmq.yaml` according to srsRAN_Project 23.10 (2023.10.20).
