@@ -1,7 +1,7 @@
 # Open5GS 5GC & srsRAN 5G with ZeroMQ UE / RAN Sample Configuration
 srsRAN_Project and srsRAN_4G software suites include a virtual radio which uses the ZeroMQ networking library to transfer radio samples between applications.
 Therefore, in order to use U-Plane's DN (Data Network) as a trial, I built a simulation environment for the 5GC mobile network.
-This briefly describes the overall and configuration files in the Virtualbox VM environment.
+This briefly describes the overall and configuration files in the Proxmox VE VM environment.
 
 ---
 
