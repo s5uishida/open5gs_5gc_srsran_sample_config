@@ -3,6 +3,8 @@ srsRAN_Project and srsRAN_4G software suites include a virtual radio which uses 
 Therefore, in order to use U-Plane's DN (Data Network) as a trial, I built a simulation environment for the 5GC mobile network.
 This briefly describes the overall and configuration files in the Proxmox VE environment.
 
+**srsRAN_Project is now [OCUDU](https://gitlab.com/ocudu/ocudu). You may use OCUDU as gNodeB to verify this operation in the same way.**
+
 ---
 
 ### [Sample Configurations and Miscellaneous for Mobile Network](https://github.com/s5uishida/sample_config_misc_for_mobile_network)
